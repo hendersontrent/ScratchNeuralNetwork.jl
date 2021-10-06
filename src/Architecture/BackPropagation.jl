@@ -10,15 +10,33 @@ BackPropagation(NeuralNetwork)
 Arguments:
 - `NeuralNetwork` : The NeuralNetwork structure.
 """
-function BackPropogation(NeuralNetwork)
+function BackPropogation(NeuralNetwork, ActivationFunction::String = "Sigmoid")
+
+    # Check activation function argument
+
+    (ActivationFunction == "Sigmoid" || ActivationFunction == "Tanh" || ActivationFunction == "ReLU" || ActivationFunction == "Linear") || error("`ActivationFunction` should be a String of either 'Sigmoid', 'Tanh', 'ReLU' or 'Linear'.")
     
     # Use the chain rule to find derivative of loss function w.r.t. w₁ and w₂ (weights)
 
-    ∂w₂ = transpose(NeuralNetwork.layer1) * ((2 * (NeuralNetwork.y - NeuralNetwork.output)) * SigmoidDerivative(NeuralNetwork.output))
+    if ActivationFunction == "Sigmoid"
+        DerivOutput = SigmoidDerivative(NeuralNetwork.output)
+        DerivLayer1 = SigmoidDerivative(NeuralNetwork.output)
+    elseif ActivationFunction == "Tanh"
+        DerivOutput = TanhDerivative(NeuralNetwork.output)
+        DerivLayer1 = TanhDerivative(NeuralNetwork.output)
+    elseif ActivationFunction == "ReLU"
+        DerivOutput = ReLUDerivative(NeuralNetwork.output)
+        DerivLayer1 = ReLUDerivative(NeuralNetwork.output)
+    elseif ActivationFunction == "Linear"
+        DerivOutput = LinearDerivative(NeuralNetwork.output)
+        DerivLayer1 = LinearDerivative(NeuralNetwork.output)
+    end
 
-    ∂w₁ = ((2 * (NeuralNetwork.y - NeuralNetwork.output)) * SigmoidDerivative(NeuralNetwork.output)) * transpose(NeuralNetwork.w₂)
+    ∂w₂ = transpose(NeuralNetwork.layer1) * ((2 * (NeuralNetwork.y - NeuralNetwork.output)) * DerivOutput)
 
-    ∂w₁ = ∂w₁ * SigmoidDerivative(NeuralNetwork.layer1)
+    ∂w₁ = ((2 * (NeuralNetwork.y - NeuralNetwork.output)) * DerivOutput) * transpose(NeuralNetwork.w₂)
+
+    ∂w₁ = ∂w₁ * DerivLayer1
     
     ∂w₁ = transpose(NeuralNetwork.input) * ∂w₁
 
