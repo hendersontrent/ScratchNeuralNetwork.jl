@@ -14,6 +14,7 @@ include("LossFunctions/CrossEntropy.jl")
 include("Architecture/FeedForward.jl")
 include("Architecture/BackPropagation.jl")
 include("Architecture/RunNeuralNetwork.jl")
+include("Architecture/NeuralNetwork.jl")
 #include("Plotting/PlotLossFunction.jl")
 
 # Exports
@@ -30,6 +31,7 @@ export CrossEntropy
 export FeedForward
 export BackPropagation
 export RunNeuralNetwork
+export NeuralNetwork
 #export PlotLossFunction
 
 end
