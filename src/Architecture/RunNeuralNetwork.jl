@@ -54,7 +54,7 @@ function RunNeuralNetwork(Epochs::Int64 = 1000, ActivationFunction::String = "Si
                         break
                     end
                 else
-                    BadCounter = 0
+                    BadCounter = 0 # Rest if there is an improvement
                 end
             else
             end
