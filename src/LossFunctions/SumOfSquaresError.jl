@@ -1,7 +1,7 @@
 """
     SumOfSquaresError(NeuralNetwork)
 
-Sum of square error loss function.
+Sum of squares error loss function.
 
     Usage:
 ```julia-repl
@@ -11,6 +11,11 @@ Arguments:
 - `NeuralNetwork` : The NeuralNetwork structure.
 """
 function SumOfSquaresError(NeuralNetwork)
-    loss = sum((NeuralNetwork.y - NeuralNetwork.output) ^ 2)
+	loss = 0.0
+
+	for i in 1:size(NeuralNetwork.y, 1)
+		loss += (NeuralNetwork.y[i] - NeuralNetwork.output[i]) ^ 2.0
+    end
+	
     return loss
 end
