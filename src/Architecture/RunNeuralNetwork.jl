@@ -28,7 +28,6 @@ function RunNeuralNetwork(Epochs::Int64 = 1000, ActivationFunction::String = "Si
     # Train the network
 
     for i in 1:Epochs
-        print(string("Running epoch: ", i, " of ", Epochs))
         NeuralNetwork = FeedForward(NeuralNetwork)
         NeuralNetwork = BackPropogation(NeuralNetwork, ActivationFunction)
 
@@ -39,5 +38,6 @@ function RunNeuralNetwork(Epochs::Int64 = 1000, ActivationFunction::String = "Si
         elseif LossFunction == "CrossEntropy"
             loss[i] = CrossEntropy(NeuralNetwork)
         end
+        print(string("Epoch: ", i, " of ", Epochs, ". Loss: ", loss[i]))
     end
 end
